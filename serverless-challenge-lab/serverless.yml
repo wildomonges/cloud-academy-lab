@@ -1,0 +1,55 @@
+service: ca-serverless-challenge
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: us-west-2
+  iam:
+    role: arn:aws:iam::599193271323:role/cloudacademylabs-ServerlessLambdaRole-BK0U7MKTNKPD
+  environment:
+    TABLE_NAME: tokensTable
+
+
+functions:
+  generate_token:
+    handler: handler.generate_token
+    events:
+      - http:
+          path: /token
+          method: get
+    
+  auth_function:
+    handler: handler.auth_function
+
+  send_sqs_message:
+    handler: handler.send_sqs_message
+    events:
+      - http:
+          path: /send_sqs_message
+          method: post
+          authorizer: auth_function
+    environment:
+      QUEUE_URL: !Ref tokenSQS
+
+resources:
+  Resources:
+    tokensTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: tokensTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    tokenSQS:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: tokenSQS
