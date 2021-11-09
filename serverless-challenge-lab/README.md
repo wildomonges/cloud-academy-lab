@@ -11,3 +11,6 @@ In this lab challenge, I proved my knowledge of the **Serverless framework** by 
 
 I created the **DynamoDB** table and the **SQS** queue through the **Serverless framework**.
 
+## Diagram Architecture
+
+![cloud-academy-serverless-challenge-1](https://user-images.githubusercontent.com/1512828/140843979-c854a7f5-5137-4e7a-b38b-aa1a3523ccdf.png)
