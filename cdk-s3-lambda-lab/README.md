@@ -1,5 +1,5 @@
 
-# CDK Python Proejct - S3 and Lambda Definition
+# CDK Python Project - S3 and Lambda Definition
 
 AWS Cloud Academy  References:
 - Lab URL: https://cloudacademy.com/lab/getting-started-aws-cloud-development-kit-python/?context_id=3576&context_resource=lp
